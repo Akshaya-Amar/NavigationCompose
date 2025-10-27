@@ -17,6 +17,11 @@ fun AppNavigation(modifier: Modifier = Modifier) {
             onBack = { backStack.removeLastOrNull() },
             entryProvider = entryProvider {
                   homeNavGraph(backStack)
+                  dashboardNavGraph(backStack)
+                  settingNavGraph(backStack)
+                  profileNavGraph(backStack)
+                  postNavGraph(backStack)
+                  notificationNavGraph(backStack)
             }
       )
 }

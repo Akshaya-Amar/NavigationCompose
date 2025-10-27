@@ -20,10 +20,4 @@ fun EntryProviderScope<NavKey>.homeNavGraph(backStack: MutableList<NavKey>) {
                   onNotificationClick = { backStack.add(NotificationDestination.Root) }
             )
       }
-
-      dashboardNavGraph(backStack)
-      settingNavGraph(backStack)
-      profileNavGraph(backStack)
-      postNavGraph(backStack)
-      notificationNavGraph(backStack)
 }
