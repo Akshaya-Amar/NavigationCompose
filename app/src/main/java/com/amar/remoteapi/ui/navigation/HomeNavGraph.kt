@@ -3,6 +3,7 @@ package com.amar.remoteapi.ui.navigation
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import com.amar.remoteapi.ui.DashboardDestination
+import com.amar.remoteapi.ui.FileUploadDestination
 import com.amar.remoteapi.ui.HomeDestination
 import com.amar.remoteapi.ui.NotificationDestination
 import com.amar.remoteapi.ui.PostDestination
@@ -17,7 +18,8 @@ fun EntryProviderScope<NavKey>.homeNavGraph(backStack: MutableList<NavKey>) {
                   onSettingsClick = { backStack.add(SettingDestination.Root) },
                   onProfileClick = { backStack.add(ProfileDestination.Root) },
                   onPostClick = { backStack.add((PostDestination.Root)) },
-                  onNotificationClick = { backStack.add(NotificationDestination.Root) }
+                  onNotificationClick = { backStack.add(NotificationDestination.Root) },
+                  onFileUploadClick = { backStack.add(FileUploadDestination.Root) }
             )
       }
 
@@ -26,4 +28,5 @@ fun EntryProviderScope<NavKey>.homeNavGraph(backStack: MutableList<NavKey>) {
       profileNavGraph(backStack)
       postNavGraph(backStack)
       notificationNavGraph(backStack)
+      fileUploadNavGraph(backStack)
 }

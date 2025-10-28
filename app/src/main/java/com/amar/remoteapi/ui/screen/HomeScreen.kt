@@ -19,7 +19,8 @@ fun HomeScreen(
       onSettingsClick: () -> Unit,
       onProfileClick: () -> Unit,
       onPostClick: () -> Unit,
-      onNotificationClick: () -> Unit
+      onNotificationClick: () -> Unit,
+      onFileUploadClick: () -> Unit
 ) {
       Column(
             modifier = Modifier
@@ -37,5 +38,6 @@ fun HomeScreen(
             Button(onClick = onProfileClick) { Text("Go to Profile") }
             Button(onClick = onPostClick) { Text("Go to Post") }
             Button(onClick = onNotificationClick) { Text("Go to Notifications") }
+            Button(onClick = onFileUploadClick) { Text("Go to Upload File") }
       }
 }

@@ -11,6 +11,15 @@ class ApiServiceImpl @Inject constructor(
       private val client: HttpClient
 ) : ApiService {
       override suspend fun getPosts(): List<Post> {
+            /*client.post("") {
+                  setBody(
+                        MultiPartFormDataContent(
+                              formData {
+                                    append("", "")
+                              }
+                        )
+                  )
+            }*/
             return client.get(POSTS).body()
       }
 }
