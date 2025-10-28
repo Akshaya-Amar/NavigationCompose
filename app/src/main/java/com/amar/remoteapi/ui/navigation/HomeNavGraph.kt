@@ -11,7 +11,7 @@ import com.amar.remoteapi.ui.SettingDestination
 import com.amar.remoteapi.ui.screen.HomeScreen
 
 fun EntryProviderScope<NavKey>.homeNavGraph(backStack: MutableList<NavKey>) {
-      entry<HomeDestination> {
+      entry<HomeDestination.Root> {
             HomeScreen(
                   onDashboardClick = { backStack.add(DashboardDestination.Root) },
                   onSettingsClick = { backStack.add(SettingDestination.Root) },
@@ -20,4 +20,10 @@ fun EntryProviderScope<NavKey>.homeNavGraph(backStack: MutableList<NavKey>) {
                   onNotificationClick = { backStack.add(NotificationDestination.Root) }
             )
       }
+
+      dashboardNavGraph(backStack)
+      settingNavGraph(backStack)
+      profileNavGraph(backStack)
+      postNavGraph(backStack)
+      notificationNavGraph(backStack)
 }

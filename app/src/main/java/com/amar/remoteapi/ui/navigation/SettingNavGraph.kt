@@ -10,14 +10,14 @@ import com.amar.remoteapi.ui.screen.HelpScreen
 import com.amar.remoteapi.ui.screen.SettingsScreen
 import com.amar.remoteapi.ui.screen.TermsScreen
 
-fun EntryProviderScope<NavKey>.settingNavGraph(backstack: MutableList<NavKey>) {
+fun EntryProviderScope<NavKey>.settingNavGraph(backStack: MutableList<NavKey>) {
       entry<SettingDestination.Root> {
             SettingsScreen(
-                  onAccountClick = { backstack.add(SettingDestination.Account) },
-                  onHelpClick = { backstack.add(SettingDestination.Help) },
-                  onAboutClick = { backstack.add(SettingDestination.About) },
-                  onTermsClick = { backstack.add(SettingDestination.Terms) },
-                  onBillingClick = { backstack.add(BillingDestination.Root) }
+                  onAccountClick = { backStack.add(SettingDestination.Account) },
+                  onHelpClick = { backStack.add(SettingDestination.Help) },
+                  onAboutClick = { backStack.add(SettingDestination.About) },
+                  onTermsClick = { backStack.add(SettingDestination.Terms) },
+                  onBillingClick = { backStack.add(BillingDestination.Root) }
             )
       }
 
@@ -37,5 +37,5 @@ fun EntryProviderScope<NavKey>.settingNavGraph(backstack: MutableList<NavKey>) {
             TermsScreen()
       }
 
-      billingNavGraph(backstack)
+      billingNavGraph(backStack)
 }

@@ -4,4 +4,6 @@ import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-object HomeDestination : NavKey
+sealed interface HomeDestination : NavKey {
+      @Serializable object Root : HomeDestination
+}
