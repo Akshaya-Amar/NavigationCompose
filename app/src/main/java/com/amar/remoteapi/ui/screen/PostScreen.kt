@@ -21,6 +21,7 @@ fun PostScreen(
 ) {
       val postResult by viewModel.posts.collectAsStateWithLifecycle()
       when (postResult) {
+            is ApiResult.Idle -> {}
             is ApiResult.Loading -> {
                   Log.d("check...", "PostScreen: Loading")
                   LoadingView()

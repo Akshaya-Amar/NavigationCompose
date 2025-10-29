@@ -11,42 +11,82 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import kotlin.math.log
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.amar.remoteapi.common.network.ApiResult
+import com.amar.remoteapi.data.model.FileUploadResponse
+import com.amar.remoteapi.ui.component.LoadingView
+import com.amar.remoteapi.ui.viewmodel.PostViewModel
+import com.amar.remoteapi.util.FileUtils
 
 @Composable
-fun FileUploadScreen() {
+fun FileUploadScreen(
+      viewModel: PostViewModel = hiltViewModel()
+) {
+      val uploadResult by viewModel.fileUploadResult.collectAsStateWithLifecycle()
+      when (uploadResult) {
+            is ApiResult.Idle -> {}
+            is ApiResult.Loading -> {
+                  LoadingView()
+                  Log.d("check...", "FileUploadScreen: Loading")
+            }
+
+            is ApiResult.Failure -> {
+                  val message = (uploadResult as ApiResult.Failure).message
+                  Log.d("check...", "FileUploadScreen: Failure -> $message")
+            }
+
+            is ApiResult.Success -> {
+                  val uploadResponse = (uploadResult as ApiResult.Success<FileUploadResponse>).data
+                  Log.d("check...", "FileUploadScreen: Success -> $uploadResponse")
+            }
+      }
+
       val context = LocalContext.current
-       val imagePickerLauncher = rememberLauncherForActivityResult(
+      val imagePickerLauncher = rememberLauncherForActivityResult(
             contract = ActivityResultContracts.GetContent()
       ) { uri ->
-            uri?.let {
-                  Log.d("check...", "FileUploadScreen: Image -> $it")
-//                  val file = uriToFile(context, it)
-//                  viewModel.uploadFile(file, "My Image Note", "image")
+            uri?.let { selectedUri ->
+                  val byteArray = FileUtils.getBytesFromUri(context, selectedUri)
+                  val mimeType = FileUtils.getMimeType(context, selectedUri)
+                  Log.d("check...", "Image URI -> $selectedUri, Image filetype -> $mimeType")
+                  viewModel.uploadFile(
+                        bytes = byteArray,
+                        mimeType = mimeType
+                  )
             }
       }
 
       val videoPickerLauncher = rememberLauncherForActivityResult(
             contract = ActivityResultContracts.GetContent()
       ) { uri ->
-            uri?.let {
-                  Log.d("check...", "FileUploadScreen: Video -> $it")
-//                  val file = uriToFile(context, it)
-//                  viewModel.uploadFile(file, "My Video Note", "video")
+            uri?.let { selectedUri ->
+                  val byteArray = FileUtils.getBytesFromUri(context, selectedUri)
+                  val mimeType = FileUtils.getMimeType(context, selectedUri)
+                  Log.d("check...", "Image URI -> $selectedUri, Video filetype -> $mimeType")
+                  viewModel.uploadFile(
+                        bytes = byteArray,
+                        mimeType = mimeType
+                  )
             }
       }
 
       val pdfPickerLauncher = rememberLauncherForActivityResult(
-            contract = ActivityResultContracts.GetContent()
+            contract = ActivityResultContracts.GetContent(),
       ) { uri ->
-            uri?.let {
-                  Log.d("check...", "FileUploadScreen: PDF -> $it")
-//                  val file = uriToFile(context, it)
-//                  viewModel.uploadFile(file, "My PDF Note", "pdf")
+            uri?.let {selectedUri->
+                  val byteArray = FileUtils.getBytesFromUri(context, selectedUri)
+                  val mimeType = FileUtils.getMimeType(context, selectedUri)
+                  Log.d("check...", "Image URI -> $selectedUri, Document filetype -> $mimeType")
+                  viewModel.uploadFile(
+                        bytes = byteArray,
+                        mimeType = mimeType
+                  )
             }
       }
 

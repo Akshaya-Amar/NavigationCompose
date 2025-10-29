@@ -57,8 +57,8 @@ object NetworkModule {
                   defaultRequest {
                         url(BASE_URL)
                         accept(ContentType.Application.Json)
-                        header(HttpHeaders.Authorization, "Bearer X_TOKEN")
-                        header("x-api-key", "API_KEY")
+//                        header(HttpHeaders.Authorization, "Bearer X_TOKEN")
+//                        header("x-api-key", "API_KEY")
                   }
             }
       }
