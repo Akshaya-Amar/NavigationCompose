@@ -1,5 +1,7 @@
 package com.amar.remoteapi.ui.screen
 
+import android.content.Context
+import android.net.Uri
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -43,7 +45,7 @@ fun FileUploadScreen(
 
             is ApiResult.Success -> {
                   val uploadResponse = (uploadResult as ApiResult.Success<FileUploadResponse>).data
-                  Log.d("check...", "FileUploadScreen: Success -> $uploadResponse")
+                  Log.d("check...", "FileUploadScreen: Success -> ${System.currentTimeMillis()}, $uploadResponse")
             }
       }
 
@@ -52,13 +54,7 @@ fun FileUploadScreen(
             contract = ActivityResultContracts.GetContent()
       ) { uri ->
             uri?.let { selectedUri ->
-                  val byteArray = FileUtils.getBytesFromUri(context, selectedUri)
-                  val mimeType = FileUtils.getMimeType(context, selectedUri)
-                  Log.d("check...", "Image URI -> $selectedUri, Image filetype -> $mimeType")
-                  viewModel.uploadFile(
-                        bytes = byteArray,
-                        mimeType = mimeType
-                  )
+                  uploadSelectedFile(context, viewModel, selectedUri)
             }
       }
 
@@ -66,27 +62,15 @@ fun FileUploadScreen(
             contract = ActivityResultContracts.GetContent()
       ) { uri ->
             uri?.let { selectedUri ->
-                  val byteArray = FileUtils.getBytesFromUri(context, selectedUri)
-                  val mimeType = FileUtils.getMimeType(context, selectedUri)
-                  Log.d("check...", "Image URI -> $selectedUri, Video filetype -> $mimeType")
-                  viewModel.uploadFile(
-                        bytes = byteArray,
-                        mimeType = mimeType
-                  )
+                  uploadSelectedFile(context, viewModel, selectedUri)
             }
       }
 
       val pdfPickerLauncher = rememberLauncherForActivityResult(
             contract = ActivityResultContracts.GetContent(),
       ) { uri ->
-            uri?.let {selectedUri->
-                  val byteArray = FileUtils.getBytesFromUri(context, selectedUri)
-                  val mimeType = FileUtils.getMimeType(context, selectedUri)
-                  Log.d("check...", "Image URI -> $selectedUri, Document filetype -> $mimeType")
-                  viewModel.uploadFile(
-                        bytes = byteArray,
-                        mimeType = mimeType
-                  )
+            uri?.let { selectedUri ->
+                  uploadSelectedFile(context, viewModel, selectedUri)
             }
       }
 
@@ -114,4 +98,18 @@ fun FileUploadScreen(
                   Text("Upload PDF")
             }
       }
+}
+
+private fun uploadSelectedFile(
+      context: Context,
+      viewModel: PostViewModel,
+      selectedUri: Uri
+) {
+      val byteArray = FileUtils.getBytesFromUri(context, selectedUri)
+      val mimeType = FileUtils.getMimeType(context, selectedUri)
+      Log.d("check...", "FileType -> $mimeType")
+      viewModel.uploadFile(
+            bytes = byteArray,
+            mimeType = mimeType
+      )
 }

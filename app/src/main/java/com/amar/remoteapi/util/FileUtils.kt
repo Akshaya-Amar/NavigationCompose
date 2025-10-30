@@ -22,7 +22,7 @@ object FileUtils {
       ) = context.contentResolver.getType(uri) ?: "application/octet-stream"
 
       fun getFileName(mimeType: String): String {
-            val extension = getExtensionFromMimeType(mimeType)
+            val extension = mimeType.substringAfterLast('/')
             val baseName = when (extension.lowercase()) {
                   "pdf" -> "file"
                   "png", "jpg", "jpeg", "gif", "webp" -> "image"
@@ -32,6 +32,4 @@ object FileUtils {
             }
             return "${baseName}_${System.currentTimeMillis()}.$extension"
       }
-
-      private fun getExtensionFromMimeType(mimeType: String) = mimeType.substringAfterLast('/')
 }

@@ -43,7 +43,7 @@ class ApiServiceImpl @Inject constructor(
                                           append(HttpHeaders.ContentType, mimeType)
                                           append(
                                                 HttpHeaders.ContentDisposition,
-                                                "filename={$fileName}"
+                                                "filename=$fileName"
                                           )
                                     })
                               }
