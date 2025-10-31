@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class FileUploadResponse(
-      @SerialName("res") val res: Int,
-      @SerialName("msg") val message: String,
-      @SerialName("image_url") val imageUrl: String? = null
+      val res: Int = 0,
+      @SerialName("msg") val message: String = "",
+      @SerialName("image_url") val imageUrl: String = ""
 )

@@ -11,6 +11,10 @@ class PostRepositoryImpl @Inject constructor(
             apiService.getPosts()
       }
 
+      override suspend fun getDemoData() = networkFlow {
+            apiService.getDemoData()
+      }
+
       override suspend fun uploadFile(
             bytes: ByteArray,
             mimeType: String,

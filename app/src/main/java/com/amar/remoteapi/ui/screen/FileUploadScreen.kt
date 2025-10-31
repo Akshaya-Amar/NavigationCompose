@@ -45,7 +45,7 @@ fun FileUploadScreen(
 
             is ApiResult.Success -> {
                   val uploadResponse = (uploadResult as ApiResult.Success<FileUploadResponse>).data
-                  Log.d("check...", "FileUploadScreen: Success -> ${System.currentTimeMillis()}, $uploadResponse")
+                  Log.d("check...", "FileUploadScreen: Success -> $uploadResponse")
             }
       }
 

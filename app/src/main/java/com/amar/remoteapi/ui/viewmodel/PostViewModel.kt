@@ -1,11 +1,11 @@
 package com.amar.remoteapi.ui.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.amar.remoteapi.common.network.ApiResult
-import com.amar.remoteapi.data.model.Post
+import com.amar.remoteapi.data.model.DemoData
 import com.amar.remoteapi.data.model.FileUploadResponse
+import com.amar.remoteapi.data.model.Post
 import com.amar.remoteapi.data.repository.PostRepository
 import com.amar.remoteapi.util.FileUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,20 +22,26 @@ class PostViewModel @Inject constructor(
       private var _posts = MutableStateFlow<ApiResult<List<Post>>>(ApiResult.Idle)
       val posts = _posts.asStateFlow()
 
-      private var _fileUploadResult =
-            MutableStateFlow<ApiResult<FileUploadResponse>>(ApiResult.Idle)
-      val fileUploadResult = _fileUploadResult.asStateFlow()
+      private var _demoResult = MutableStateFlow<ApiResult<List<DemoData>>>(ApiResult.Idle)
+      val demoResult = _demoResult.asStateFlow()
 
-      /*init {
-            getPosts()
-      }*/
+      private var _fileUploadResult = MutableStateFlow<ApiResult<FileUploadResponse>>(ApiResult.Idle)
+      val fileUploadResult = _fileUploadResult.asStateFlow()
 
       fun getPosts() {
             viewModelScope.launch {
                   _posts.value = ApiResult.Loading
                   repository.getPosts().collectLatest {
-                        Log.d("check12...", "getPosts: ")
                         _posts.value = it
+                  }
+            }
+      }
+
+      fun getDemoData() {
+            viewModelScope.launch {
+                  _demoResult.value = ApiResult.Loading
+                  repository.getDemoData().collectLatest {
+                        _demoResult.value = it
                   }
             }
       }
